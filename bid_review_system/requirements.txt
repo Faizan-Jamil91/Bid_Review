@@ -23,7 +23,7 @@ redis
 django-redis
 
 # AI/ML
-google-generativeai
+google-genai
 scikit-learn
 pandas
 numpy
