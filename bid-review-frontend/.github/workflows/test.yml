@@ -1,0 +1,46 @@
+name: Frontend Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: bid-review-frontend/package-lock.json
+
+    - name: Install dependencies
+      working-directory: bid-review-frontend
+      run: npm ci
+
+    - name: Run ESLint
+      working-directory: bid-review-frontend
+      run: npm run lint
+
+    - name: Run tests
+      working-directory: bid-review-frontend
+      run: npm run test:ci
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: bid-review-frontend/coverage/lcov.info
+        flags: frontend
+        name: frontend-coverage
+        fail_ci_if_error: false

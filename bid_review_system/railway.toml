@@ -1,0 +1,13 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "gunicorn bid_review_system.wsgi:application --bind 0.0.0.0:$PORT"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 100
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
+
+[env]
+PORT = "8000"
+DJANGO_SETTINGS_MODULE = "bid_review_system.settings_production"

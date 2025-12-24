@@ -1,0 +1,40 @@
+# Core Django
+Django
+djangorestframework
+
+# Database
+psycopg2-binary
+dj-database-url
+
+# Authentication & Security
+djangorestframework-simplejwt
+django-cors-headers
+python-decouple
+
+# File Storage
+django-storages
+boto3
+
+# Task Queue
+celery
+django-celery-results
+django-celery-beat
+redis
+django-redis
+
+# AI/ML
+google-generativeai
+scikit-learn
+pandas
+numpy
+joblib
+
+# Utilities
+python-dotenv
+django-filter
+drf-yasg
+whitenoise
+gunicorn
+
+# Monitoring
+django-health-check
