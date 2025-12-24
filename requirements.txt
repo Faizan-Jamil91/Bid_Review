@@ -12,7 +12,7 @@ django-celery-results
 django-celery-beat
 redis
 django-redis
-google-generativeai
+google-genai
 scikit-learn
 pandas
 numpy
