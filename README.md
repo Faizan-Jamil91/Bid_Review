@@ -452,31 +452,3 @@ docker-compose build
 
 # Run services
 docker-compose up -d
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License.
-
-## Support
-
-For support and questions:
-- Create an issue in the repository
-- Contact the development team
-- Check the documentation for common issues
-
----
-
-**Last Updated**: December 2024
-**Version**: 1.0.0
-**Maintainers**: Bid Review System Development Team
-#   B i d _ R e v i e w  
- 
