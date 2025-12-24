@@ -1,6 +1,9 @@
 # Core Django
-Django
-djangorestframework
+Django>=4.2,<5.0
+djangorestframework>=3.14
+psycopg2-binary>=2.9
+dj-database-url>=2.1
+djangorestframework-simplejwt>=5.3
 
 # Database
 psycopg2-binary
