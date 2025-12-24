@@ -1,4 +1,5 @@
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from django.conf import settings
 import logging
 from typing import Optional, Dict, Any, List
@@ -17,34 +18,34 @@ class GeminiAIClient:
             return
         
         try:
-            genai.configure(api_key=self.api_key)
-            self.model = genai.GenerativeModel('gemini-2.5-flash')
+            self.client = genai.Client(api_key=self.api_key)
+            self.model_name = 'gemini-2.0-flash'
             
             # Configure generation parameters
-            self.generation_config = {
-                'temperature': 0.2,
-                'top_p': 0.8,
-                'top_k': 40,
-                'max_output_tokens': 2048,
-            }
+            self.generation_config = types.GenerateContentConfig(
+                temperature=0.2,
+                top_p=0.8,
+                top_k=40,
+                max_output_tokens=2048,
+            )
             
             self.safety_settings = [
-                {
-                    "category": "HARM_CATEGORY_HARASSMENT",
-                    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    "category": "HARM_CATEGORY_HATE_SPEECH",
-                    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-                    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-                }
+                types.HarmCategory(
+                    category=types.HarmCategory.HARM_CATEGORY_HARASSMENT,
+                    threshold=types.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
+                ),
+                types.HarmCategory(
+                    category=types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                    threshold=types.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
+                ),
+                types.HarmCategory(
+                    category=types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                    threshold=types.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
+                ),
+                types.HarmCategory(
+                    category=types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                    threshold=types.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
+                )
             ]
             self.initialized = True
         except Exception as e:
@@ -77,10 +78,10 @@ class GeminiAIClient:
         """
         
         try:
-            response = self.model.generate_content(
-                prompt,
-                generation_config=self.generation_config,
-                safety_settings=self.safety_settings
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=self.generation_config
             )
             
             # Parse JSON response
@@ -119,10 +120,10 @@ class GeminiAIClient:
         """
         
         try:
-            response = self.model.generate_content(
-                prompt,
-                generation_config=self.generation_config,
-                safety_settings=self.safety_settings
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=self.generation_config
             )
             
             sections = json.loads(response.text)
@@ -163,10 +164,10 @@ class GeminiAIClient:
         """
         
         try:
-            response = self.model.generate_content(
-                prompt,
-                generation_config=self.generation_config,
-                safety_settings=self.safety_settings
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=self.generation_config
             )
             
             prediction = json.loads(response.text)
@@ -198,10 +199,10 @@ class GeminiAIClient:
         """
         
         try:
-            response = self.model.generate_content(
-                prompt,
-                generation_config=self.generation_config,
-                safety_settings=self.safety_settings
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=self.generation_config
             )
             
             analysis = json.loads(response.text)
@@ -234,10 +235,10 @@ class GeminiAIClient:
         """
         
         try:
-            response = self.model.generate_content(
-                prompt,
-                generation_config=self.generation_config,
-                safety_settings=self.safety_settings
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=self.generation_config
             )
             
             return response.text
